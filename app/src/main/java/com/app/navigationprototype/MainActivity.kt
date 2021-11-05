@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,36 +15,55 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.app.authentication.landing.LandingScreen
 import com.app.dashboard.DashboardScreen
-import com.app.navigation.NavigationDirections
+import com.app.navigation.external.Navigator
+import com.app.navigation.external.NavigatorEvent
+import com.app.navigation.external.destinations.DashboardNavigation
 import com.app.styles.theme.NavigationPrototypeTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             NavigationPrototypeTheme {
                 SetSystemBarTransparent()
-
-                val navController = rememberNavController()
-                NavHost(
-                    navController = navController,
-                    startDestination = NavigationDirections.authentication.destination
-                ) {
-                    composable(NavigationDirections.dashboard.destination) {
-                        DashboardScreen(hiltViewModel())
-                    }
-
-                    composable(NavigationDirections.authentication.destination) {
-                        LandingScreen(hiltViewModel())
-                    }
-                }
-
+                RhAppNavigation(navigator = navigator)
             }
+        }
+    }
+}
+
+@Composable
+private fun RhAppNavigation(navigator: Navigator) {
+    val navController = rememberNavController()
+    LaunchedEffect(navController) {
+        navigator.destinations.collectLatest {
+            when(val event = it) {
+                is NavigatorEvent.Directions -> navController.navigate(event.destination, event.builder)
+                NavigatorEvent.NavigateUp -> navController.navigateUp()
+            }
+        }
+    }
+
+    NavHost(
+        navController = navController,
+        startDestination = "authentication"
+    ) {
+        composable(DashboardNavigation.route()) {
+            DashboardScreen(hiltViewModel())
+        }
+
+        composable("authentication") {
+            LandingScreen(hiltViewModel())
         }
     }
 }

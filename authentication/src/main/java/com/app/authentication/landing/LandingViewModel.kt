@@ -2,17 +2,20 @@ package com.app.authentication.landing
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.app.navigation.INavigationManager
+import com.app.navigation.external.Navigator
+import com.app.navigation.external.destinations.DashboardNavigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class LandingViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val navigationManager: INavigationManager
+    private val navigator : Navigator
 ) : ViewModel() {
 
     fun navigate() {
-        val x = 1
+            navigator.navigate(
+                DashboardNavigation.createDashboardRoute()
+            )
     }
 }
