@@ -10,3 +10,4 @@ rootProject.name = "NavigationPrototype"
 include ':app'
 include ':authentication'
 include ':common:styles'
+include ':dashboard'

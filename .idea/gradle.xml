@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/authentication" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/common/styles" />
+            <option value="$PROJECT_DIR$/dashboard" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
