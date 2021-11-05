@@ -1,15 +1,13 @@
 package com.app.navigation.external.destinations
 
-import androidx.navigation.NavType
-import androidx.navigation.compose.NamedNavArgument
-import androidx.navigation.compose.navArgument
 import com.app.navigation.external.NavigationDestination
 
 object DashboardNavigation : NavigationDestination {
 
+    private const val DASHBOARD_ROUTE = "dashboard"
+
     override fun route(): String = DASHBOARD_ROUTE
 
-    private const val DASHBOARD_ROUTE = "dashboard"
     fun createDashboardRoute() = DASHBOARD_ROUTE
 }
 
