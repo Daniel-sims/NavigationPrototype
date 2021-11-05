@@ -51,7 +51,10 @@ android {
 
 dependencies {
     implementation project(":authentication")
+    implementation project(":dashboard")
+
     implementation project(":common:styles")
+    implementation project(":common:navigation")
 
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.21.0-beta"
 

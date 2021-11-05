@@ -10,7 +10,12 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.app.authentication.landing.LandingScreen
+import com.app.dashboard.DashboardScreen
+import com.app.navigation.NavigationDirections
 import com.app.styles.theme.NavigationPrototypeTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,16 +23,27 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             NavigationPrototypeTheme {
                 SetSystemBarTransparent()
 
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    LandingScreen()
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = NavigationDirections.authentication.destination
+                ) {
+                    composable(NavigationDirections.dashboard.destination) {
+                        DashboardScreen(hiltViewModel())
+                    }
+
+                    composable(NavigationDirections.authentication.destination) {
+                        LandingScreen(hiltViewModel())
+                    }
                 }
+
             }
         }
     }
