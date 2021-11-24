@@ -3,6 +3,7 @@ package com.app.navigationprototype
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,6 +20,8 @@ import com.app.navigation.external.NavigatorEvent
 import com.app.navigation.external.destinations.DashboardNavigation
 import com.app.navigation.external.destinations.authentication.AuthenticationNavigationDirections
 import com.app.styles.theme.NavigationPrototypeTheme
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -31,6 +34,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navigator: Navigator
 
+    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -43,9 +47,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 private fun RhAppNavigation(navigator: Navigator) {
-    val navController = rememberNavController()
+    val navController = rememberAnimatedNavController()
 
     /**
      * Observer the navigator for navigation events from the modules
@@ -66,7 +71,7 @@ private fun RhAppNavigation(navigator: Navigator) {
     /**
      * Create the navigation host adding the navigation graphs from the
      */
-    NavHost(
+    AnimatedNavHost(
         navController = navController,
         startDestination = AuthenticationNavigationDirections.root.route()
     ) {

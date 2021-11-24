@@ -2,8 +2,6 @@ package com.app.authentication.landing
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -79,9 +76,7 @@ private fun HeaderContent(modifier: Modifier = Modifier) {
         Image(
             painter = painterResource(id = R.drawable.ic_teamrh_logo),
             contentDescription = "",
-            modifier = Modifier
-                .heightIn(min = 180.dp)
-                .fillMaxWidth()
+            modifier = Modifier.size(size = 180.dp)
 
         )
         Text(

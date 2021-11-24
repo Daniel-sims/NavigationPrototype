@@ -47,9 +47,9 @@ dependencies {
     // Integration with activities
     implementation 'androidx.activity:activity-compose:1.4.0'
     // Compose Material Design
-    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.material:material:1.1.0-beta02"
     // Animations
-    implementation "androidx.compose.animation:animation:$compose_version"
+    implementation "androidx.compose.animation:animation:1.1.0-beta02"
     // Tooling support (Previews, etc.)
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     // Integration with ViewModels
@@ -58,6 +58,8 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
 
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
+    implementation "com.google.accompanist:accompanist-navigation-animation:0.21.0-beta"
 
     implementation "com.google.dagger:hilt-android:2.39"
     kapt "com.google.dagger:hilt-compiler:2.39"
